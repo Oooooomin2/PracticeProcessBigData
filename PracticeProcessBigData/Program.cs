@@ -22,18 +22,14 @@ namespace PracticeProcessBigData
             };
             using (var reader = new StreamReader("./Data/KEN_ALL.CSV", Encoding.GetEncoding("SHIFT_JIS")))
             {
-                using (var csv = new CsvReader(reader, config))
-                {
-                    var yuubinBangou = csv.GetRecords<YuubinBangouModel>().ToList();
+                using var csv = new CsvReader(reader, config);
+                var yuubinBangou = csv.GetRecords<YuubinBangouModel>().ToList();
 
-                    Console.WriteLine("全部で{0}行あります。", yuubinBangou.Count());
-                    foreach (var selectedDatum in yuubinBangou
-                        .Where(o => o.YuubinBangou == "3660052"))
-                    {
-                        Console.Write("住所情報： ");
-                        Console.Write("{0} {1} {2}", selectedDatum.YuubinBangou, selectedDatum.Ken, selectedDatum.Gou);
-                        Console.WriteLine("");
-                    }
+                Console.WriteLine("全部で{0}行あります。", yuubinBangou.Count());
+                foreach (var selectedDatum in yuubinBangou
+                    .Where(o => o.YuubinBangou == "3660052"))
+                {
+                    Console.WriteLine("住所情報： {0} {1} {2}", selectedDatum.YuubinBangou, selectedDatum.Ken, selectedDatum.Gou);
                 }
             }
             sw.Stop();
